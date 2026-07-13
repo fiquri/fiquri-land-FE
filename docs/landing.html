@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Darrell Vesterfelt — Helping founders escape the messy middle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --black:   #0a0a0a;
+      --white:   #fafaf8;
+      --grey-50: #f5f5f2;
+      --grey-100:#ebebea;
+      --grey-300:#c4c4c0;
+      --grey-500:#8a8a85;
+      --grey-700:#4a4a46;
+      --accent:  #c8a96e;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --max-w: 1160px;
+      --gutter: clamp(1.5rem, 5vw, 5rem);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--white);
+      color: var(--black);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── HELPERS ──────────────────────────────────────────────────── */
+    .container {
+      width: 100%;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+    }
+
+    .label {
+      display: inline-block;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--grey-500);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.75rem;
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      border: 1.5px solid var(--black);
+      background: transparent;
+      color: var(--black);
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.18s, color 0.18s;
+    }
+    .btn:hover { background: var(--black); color: var(--white); }
+    .btn.btn-fill { background: var(--black); color: var(--white); }
+    .btn.btn-fill:hover { background: var(--grey-700); border-color: var(--grey-700); }
+
+    .arrow-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--black);
+      text-decoration: none;
+      border-bottom: 1px solid var(--grey-300);
+      padding-bottom: 0.1rem;
+      transition: border-color 0.18s, color 0.18s;
+    }
+    .arrow-link:hover { color: var(--grey-700); border-color: var(--black); }
+    .arrow-link::after { content: '→'; font-size: 0.8rem; transition: transform 0.18s; }
+    .arrow-link:hover::after { transform: translateX(3px); }
+
+    /* ─── NAV ──────────────────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(250, 250, 248, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--grey-100);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .nav-logo {
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--black);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--grey-700);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--black); }
+    .nav-links .nav-cta a {
+      padding: 0.5rem 1.1rem;
+      border: 1.5px solid var(--black);
+      color: var(--black);
+      transition: background 0.18s, color 0.18s;
+    }
+    .nav-links .nav-cta a:hover { background: var(--black); color: var(--white); }
+
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 24px;
+      height: 1.5px;
+      background: var(--black);
+    }
+
+    /* ─── HERO ─────────────────────────────────────────────────────── */
+    .hero {
+      padding: clamp(6rem, 14vw, 10rem) 0 clamp(5rem, 10vw, 8rem);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-content {}
+
+    .hero-eyebrow {
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-headline {
+      font-family: var(--font-serif);
+      font-size: clamp(2.5rem, 5.5vw, 4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--black);
+      margin-bottom: 1.75rem;
+    }
+
+    .hero-body {
+      font-size: clamp(1rem, 1.5vw, 1.125rem);
+      color: var(--grey-700);
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+      max-width: 480px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-image {
+      position: relative;
+    }
+    .hero-image-frame {
+      aspect-ratio: 4 / 5;
+      background: var(--grey-100);
+      overflow: hidden;
+      position: relative;
+    }
+    .hero-image-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    /* placeholder when no photo */
+    .hero-image-frame .img-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      color: var(--grey-300);
+    }
+    .hero-image-frame .img-placeholder svg { width: 48px; height: 48px; }
+    .hero-badge {
+      position: absolute;
+      bottom: -1.5rem;
+      right: -1.5rem;
+      background: var(--black);
+      color: var(--white);
+      padding: 1.25rem 1.5rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      line-height: 1.4;
+      max-width: 180px;
+    }
+    .hero-badge strong { display: block; font-size: 1.25rem; font-weight: 700; }
+
+    /* ─── DIVIDER ──────────────────────────────────────────────────── */
+    .section-divider {
+      height: 1px;
+      background: var(--grey-100);
+    }
+
+    /* ─── ABOUT ────────────────────────────────────────────────────── */
+    .about {
+      padding: clamp(5rem, 10vw, 8rem) 0;
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .about-label-col {
+      padding-top: 0.4rem;
+    }
+
+    .about-headline {
+      font-family: var(--font-serif);
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.75rem;
+    }
+
+    .about-body p {
+      font-size: 1rem;
+      color: var(--grey-700);
+      line-height: 1.75;
+      margin-bottom: 1rem;
+    }
+    .about-body p:last-child { margin-bottom: 0; }
+
+    /* ─── SERVICES ─────────────────────────────────────────────────── */
+    .services {
+      padding: clamp(5rem, 10vw, 8rem) 0;
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .services .label { color: var(--grey-500); }
+
+    .services-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 4rem;
+      gap: 2rem;
+    }
+
+    .services-headline {
+      font-family: var(--font-serif);
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .service-card {
+      background: var(--black);
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      transition: background 0.2s;
+    }
+    .service-card:hover { background: #161616; }
+
+    .service-number {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: var(--grey-500);
+    }
+
+    .service-name {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+
+    .service-desc {
+      font-size: 0.9375rem;
+      color: var(--grey-300);
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    .service-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .service-features li {
+      font-size: 0.8125rem;
+      color: var(--grey-500);
+      padding-left: 1.25rem;
+      position: relative;
+    }
+    .service-features li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    .service-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--white);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      padding-bottom: 0.1rem;
+      width: fit-content;
+      transition: border-color 0.18s;
+    }
+    .service-cta:hover { border-color: var(--white); }
+    .service-cta::after { content: '→'; font-size: 0.75rem; }
+
+    /* ─── WRITING ──────────────────────────────────────────────────── */
+    .writing {
+      padding: clamp(5rem, 10vw, 8rem) 0;
+    }
+
+    .writing-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 3rem;
+      gap: 2rem;
+    }
+
+    .writing-headline {
+      font-family: var(--font-serif);
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    .posts-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .post-item {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 2rem;
+      padding: 2rem 0;
+      border-top: 1px solid var(--grey-100);
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.15s;
+    }
+    .post-item:last-child { border-bottom: 1px solid var(--grey-100); }
+    .post-item:hover .post-title { color: var(--grey-700); }
+
+    .post-date {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--grey-500);
+      padding-top: 0.25rem;
+    }
+
+    .post-title {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.5rem;
+      transition: color 0.15s;
+    }
+
+    .post-excerpt {
+      font-size: 0.9rem;
+      color: var(--grey-500);
+      line-height: 1.6;
+    }
+
+    /* ─── NEWSLETTER ───────────────────────────────────────────────── */
+    .newsletter {
+      padding: clamp(5rem, 10vw, 7rem) 0;
+      background: var(--grey-50);
+    }
+
+    .newsletter-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .newsletter-headline {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+    .newsletter-headline em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .newsletter-desc {
+      font-size: 1rem;
+      color: var(--grey-700);
+      line-height: 1.7;
+      margin-bottom: 0.5rem;
+    }
+
+    .newsletter-social {
+      font-size: 0.8125rem;
+      color: var(--grey-500);
+      margin-top: 0.5rem;
+    }
+
+    .newsletter-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-field label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--grey-700);
+    }
+
+    .form-field input {
+      padding: 0.85rem 1rem;
+      border: 1.5px solid var(--grey-300);
+      background: var(--white);
+      font-family: var(--font-sans);
+      font-size: 0.9375rem;
+      color: var(--black);
+      outline: none;
+      transition: border-color 0.18s;
+      -webkit-appearance: none;
+      border-radius: 0;
+    }
+    .form-field input:focus { border-color: var(--black); }
+    .form-field input::placeholder { color: var(--grey-300); }
+
+    .newsletter-form .btn { width: 100%; justify-content: center; }
+
+    .newsletter-note {
+      font-size: 0.75rem;
+      color: var(--grey-500);
+      text-align: center;
+    }
+
+    /* ─── FOOTER ───────────────────────────────────────────────────── */
+    footer {
+      background: var(--black);
+      color: var(--white);
+      padding: clamp(3rem, 7vw, 5rem) 0 2rem;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 3rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 2rem;
+    }
+
+    .footer-brand-name {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-brand-desc {
+      font-size: 0.875rem;
+      color: var(--grey-500);
+      line-height: 1.65;
+    }
+
+    .footer-col-title {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--grey-500);
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+    }
+
+    .footer-links a {
+      font-size: 0.875rem;
+      color: var(--grey-300);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--white); }
+
+    .footer-location {
+      font-size: 0.875rem;
+      color: var(--grey-500);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-copy {
+      font-size: 0.8125rem;
+      color: var(--grey-700);
+    }
+
+    .footer-legal {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .footer-legal a {
+      font-size: 0.8125rem;
+      color: var(--grey-700);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-legal a:hover { color: var(--grey-300); }
+
+    /* ─── RESPONSIVE ───────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+      .hero-image { display: none; }
+      .about {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      .services-grid {
+        grid-template-columns: 1fr;
+        gap: 1px;
+      }
+      .newsletter-inner {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+      .footer-top {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+
+      .services-header { flex-direction: column; align-items: flex-start; }
+      .writing-header { flex-direction: column; align-items: flex-start; }
+
+      .post-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      .post-date { padding-top: 0; }
+
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── NAV ───────────────────────────────────────────────────────── -->
+  <nav>
+    <div class="container">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo">Darrell Vesterfelt</a>
+        <ul class="nav-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Work With Me</a></li>
+          <li><a href="#writing">Writing</a></li>
+          <li><a href="#newsletter">Newsletter</a></li>
+          <li class="nav-cta"><a href="#services">Get Started</a></li>
+        </ul>
+        <button class="nav-hamburger" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ─── HERO ──────────────────────────────────────────────────────── -->
+  <section>
+    <div class="container">
+      <div class="hero">
+        <div class="hero-content">
+          <div class="hero-eyebrow">
+            <span class="label">Darrell Vesterfelt</span>
+          </div>
+          <h1 class="hero-headline">I help founders escape the messy middle</h1>
+          <p class="hero-body">
+            Most people teaching growth stopped building years ago. I'm still in the trenches.
+            Making decisions every day. I've spent 20 years starting companies, selling companies,
+            and sometimes failing at companies. Learning the hard way what actually works.
+          </p>
+          <div class="hero-actions">
+            <a href="#services" class="btn btn-fill">Work With Me</a>
+            <a href="#writing" class="arrow-link">Read My Writing</a>
+          </div>
+        </div>
+
+        <div class="hero-image">
+          <div class="hero-image-frame">
+            <!-- Replace src with actual photo -->
+            <div class="img-placeholder">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+              </svg>
+              <span style="font-size:0.75rem; font-family: var(--font-sans)">Photo</span>
+            </div>
+          </div>
+          <div class="hero-badge">
+            <strong>20</strong>
+            Years building businesses
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ─── ABOUT ─────────────────────────────────────────────────────── -->
+  <section id="about">
+    <div class="container">
+      <div class="about">
+        <div class="about-label-col">
+          <span class="label">About</span>
+        </div>
+        <div class="about-body">
+          <h2 class="about-headline">
+            20 years in.<br />Still making mistakes.<br />Still learning.
+          </h2>
+          <p>
+            I started my first company at 24. Failed at some. Sold others. Built teams of 50+ people.
+            Generated millions in annual revenue.
+          </p>
+          <p>
+            I'm not a consultant who studied business. I'm an operator who's been in the trenches
+            for two decades.
+          </p>
+          <p>
+            Right now I'm working on pricing, hiring, positioning, and systems across real businesses
+            I run and invest in. Same problems you're facing. Same seat you're sitting in.
+          </p>
+          <p style="margin-top: 1.75rem;">
+            <a href="#services" class="arrow-link">See how we can work together</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ─── SERVICES ──────────────────────────────────────────────────── -->
+  <section id="services" class="services">
+    <div class="container">
+      <div class="services-header">
+        <div>
+          <span class="label" style="margin-bottom: 1rem; display: block;">What I Do</span>
+          <h2 class="services-headline">Three ways to<br />work together</h2>
+        </div>
+      </div>
+
+      <div class="services-grid">
+
+        <!-- Card 01 -->
+        <div class="service-card">
+          <span class="service-number">01</span>
+          <h3 class="service-name">Damn Near<br />Automatic</h3>
+          <p class="service-desc">
+            A private network for founders tired of building alone. Live sessions,
+            small groups, and systems that compound.
+          </p>
+          <ul class="service-features">
+            <li>Monthly live sessions</li>
+            <li>Curated founder rooms</li>
+            <li>Private community + vault</li>
+          </ul>
+          <a href="#" class="service-cta">Learn More</a>
+        </div>
+
+        <!-- Card 02 -->
+        <div class="service-card">
+          <span class="service-number">02</span>
+          <h3 class="service-name">1-on-1<br />Coaching</h3>
+          <p class="service-desc">
+            Direct access to work on the specific challenges holding you back.
+            Strategy, operations, mindset. Whatever you need.
+          </p>
+          <ul class="service-features">
+            <li>Monthly sessions + Voxer access</li>
+            <li>$3,000 / month</li>
+            <li>12-month commitment</li>
+          </ul>
+          <a href="#" class="service-cta">Apply Now</a>
+        </div>
+
+        <!-- Card 03 -->
+        <div class="service-card">
+          <span class="service-number">03</span>
+          <h3 class="service-name">Strategic<br />Consulting</h3>
+          <p class="service-desc">
+            You know what your business could be. I'll show you why it isn't there yet.
+            Deep diagnosis and embedded partnership.
+          </p>
+          <ul class="service-features">
+            <li>6-week growth assessment</li>
+            <li>Optional 12-month partnership</li>
+            <li>For $1M+ revenue companies</li>
+          </ul>
+          <a href="#" class="service-cta">Get Started</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── WRITING ────────────────────────────────────────────────────── -->
+  <section id="writing" class="writing">
+    <div class="container">
+      <div class="writing-header">
+        <div>
+          <span class="label" style="margin-bottom: 1rem; display: block;">Writing</span>
+          <h2 class="writing-headline">Recent thoughts</h2>
+        </div>
+        <a href="#" class="arrow-link">All essays</a>
+      </div>
+
+      <div class="posts-list">
+
+        <a href="#" class="post-item">
+          <span class="post-date">Jan 15, 2026</span>
+          <div>
+            <h3 class="post-title">Build a Plan You Actually Believe</h3>
+            <p class="post-excerpt">
+              Most strategic plans are performative BS. Here's how to build one that actually drives decisions.
+            </p>
+          </div>
+        </a>
+
+        <a href="#" class="post-item">
+          <span class="post-date">Jan 8, 2026</span>
+          <div>
+            <h3 class="post-title">What If There Is No Such Thing as Failure?</h3>
+            <p class="post-excerpt">
+              Every failure I've had taught me something I couldn't have learned any other way.
+            </p>
+          </div>
+        </a>
+
+        <a href="#" class="post-item">
+          <span class="post-date">Dec 28, 2025</span>
+          <div>
+            <h3 class="post-title">The People Still Here Are the Ones Who Refused to Quit</h3>
+            <p class="post-excerpt">
+              20 years in, I've watched thousands of founders come and go. The common thread isn't talent.
+            </p>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── NEWSLETTER ─────────────────────────────────────────────────── -->
+  <section id="newsletter" class="newsletter">
+    <div class="container">
+      <div class="newsletter-inner">
+        <div>
+          <span class="label" style="margin-bottom: 1rem; display: block;">Newsletter</span>
+          <h2 class="newsletter-headline"><em>Growth</em><br />Notes</h2>
+          <p class="newsletter-desc">
+            My weekly newsletter for leaders obsessed with growing their company.
+            Frameworks, patterns, and insights from my work with founders.
+          </p>
+          <p class="newsletter-social">Join 3,000+ founders &mdash; unsubscribe anytime.</p>
+        </div>
+
+        <form class="newsletter-form" onsubmit="return false;">
+          <div class="form-field">
+            <label for="nl-name">First Name</label>
+            <input type="text" id="nl-name" placeholder="Your first name" autocomplete="given-name" />
+          </div>
+          <div class="form-field">
+            <label for="nl-email">Email Address</label>
+            <input type="email" id="nl-email" placeholder="you@example.com" autocomplete="email" />
+          </div>
+          <button type="submit" class="btn btn-fill">Subscribe →</button>
+          <p class="newsletter-note">No spam. Unsubscribe at any time.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─────────────────────────────────────────────────────── -->
+  <footer>
+    <div class="container">
+      <div class="footer-top">
+        <div>
+          <p class="footer-brand-name">Darrell Vesterfelt</p>
+          <p class="footer-brand-desc">
+            Entrepreneur, investor, and coach helping founders build businesses
+            that don't consume their lives.
+          </p>
+        </div>
+
+        <div>
+          <p class="footer-col-title">Navigate</p>
+          <ul class="footer-links">
+            <li><a href="#">Growth Notes</a></li>
+            <li><a href="#">My Writing</a></li>
+            <li><a href="#">Damn Near Automatic</a></li>
+            <li><a href="#">Coaching</a></li>
+            <li><a href="#">Consulting</a></li>
+            <li><a href="#">Contact Me</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="footer-col-title">Connect</p>
+          <ul class="footer-links">
+            <li><a href="https://www.linkedin.com/in/darrellvesterfelt" target="_blank" rel="noopener">LinkedIn</a></li>
+            <li><a href="https://x.com/dvest" target="_blank" rel="noopener">Twitter / X</a></li>
+            <li><a href="https://www.instagram.com/dvest/" target="_blank" rel="noopener">Instagram</a></li>
+            <li><a href="#">Email</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="footer-col-title">Location</p>
+          <p class="footer-location">Minneapolis,<br />Minnesota</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copy">&copy; 2026 Darrell Vesterfelt. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
