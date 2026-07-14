@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useAuth } from 'features/auth'
+// import { login } from "@/features/auth/api";
 
 interface NavbarProps {
   onOpenProfile: () => void
